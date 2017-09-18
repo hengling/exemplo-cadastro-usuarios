@@ -1,8 +1,6 @@
 # `exemplo-cadastro-usuarios` — Exemplo de CRUD
 
-### Clone `exemplo-cadastro-usuarios`
-
-Clone o repositório utilizando git:
+### Clone o repositório utilizando git:
 
 ```
 git clone https://github.com/hengling/exemplo-cadastro-usuarios.git
