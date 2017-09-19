@@ -16,36 +16,8 @@ function inicializarListeners($scope) {
     });
 }
 
-angular.module('myApp.usuarios.listagem', ['ngRoute'])
-
-    .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/usuarios', {
-            templateUrl: 'usuarios/listagem/view.html',
-            controller: 'listagemUsuarioCtrl'
-        });
-    }])
-
+angular.module('myApp.usuarios.listagem')
     .controller('listagemUsuarioCtrl', ['$scope', 'listagemUsuarioService', function ($scope, listagemUsuarioService) {
-
         inicializarScope($scope, listagemUsuarioService);
-
         inicializarListeners($scope);
-
-    }])
-
-    .service('listagemUsuarioService', ['$rootScope', '$http', function ($rootScope, $http) {
-        var that = this;
-        var apiUrl = 'https://stafapi.herokuapp.com/users';
-
-        that.buscarTodosUsuarios = function () {
-            $http.get(apiUrl, {
-                headers: {
-                    'token': 'someSecretsShouldNotBeRevealed'
-                }
-            }).then(function (users) {
-                $rootScope.$broadcast('USUARIOS_CARREGADOS', users);
-            }).catch(function (err) {
-                $rootScope.$broadcast('ERRO_CARREGAR_USUARIOS', err);
-            });
-        };
     }]);
