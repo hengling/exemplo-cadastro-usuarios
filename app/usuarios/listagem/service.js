@@ -11,7 +11,21 @@
             }).then(function (users) {
                 $rootScope.$broadcast('USUARIOS_CARREGADOS', users);
             }).catch(function (err) {
-                $rootScope.$broadcast('ERRO_CARREGAR_USUARIOS', err);
+                $rootScope.$broadcast('ERRO_API', err);
+            });
+        };
+    }
+
+    function removerUsuario($rootScope, $http, constants) {
+        return function (id) {
+            $http.delete(constants.apiUrl + '/' + id, {
+                headers: {
+                    token: constants.token
+                }
+            }).then(function (users) {
+                $rootScope.$broadcast('USUARIO_REMOVIDO_SUCESSO');
+            }).catch(function (err) {
+                $rootScope.$broadcast('ERRO_API', err);
             });
         };
     }
@@ -22,6 +36,8 @@
             var that = this;
 
             that.buscarTodosUsuarios = buscarTodosUsuarios($rootScope, $http, constants);
+
+            that.removerUsuario = removerUsuario($rootScope, $http, constants);
         });
 
 })();

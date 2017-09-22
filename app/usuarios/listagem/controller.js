@@ -6,15 +6,22 @@
         listagemUsuarioService.buscarTodosUsuarios();
     }
 
-    function inicializarListeners($scope) {
+    function inicializarListeners($scope, listagemUsuarioService) {
         $scope.$on('USUARIOS_CARREGADOS', function (e, usuarios) {
             $scope.usuarios = usuarios.data;
         });
 
-        $scope.$on('ERRO_CARREGAR_USUARIOS', function (e, err) {
+        $scope.$on('ERRO_API', function (e, err) {
             $scope.usuarios = undefined;
             $scope.typeAlert = 'danger';
             $scope.alertMessage = err.data.message;
+        });
+
+        $scope.$on('USUARIO_REMOVIDO_SUCESSO', function () {
+            $scope.typeAlert = 'success';
+            $scope.alertMessage = 'Usuário removido com sucesso.';
+            $scope.usuarios = undefined;
+            listagemUsuarioService.buscarTodosUsuarios();
         });
     }
 
@@ -30,6 +37,21 @@
         };
     }
 
+    function editarUsuario($scope) {
+        return function (id) {
+            $scope.typeAlert = 'warning';
+            $scope.alertMessage = 'Funcionalidade em fase de implementação...';
+        };
+    }
+
+    function removerUsuario(listagemUsuarioService) {
+        return function (id) {
+            if (confirm('Tem certeza que deseja remover o usuário?') === true) {
+                listagemUsuarioService.removerUsuario(id);
+            }
+        };
+    }
+
     angular.module('myApp.usuarios.listagem')
         .controller('listagemUsuarioCtrl', function ($scope, $state, listagemUsuarioService) {
 
@@ -37,8 +59,12 @@
 
             $scope.visualizarUsuario = visualizarUsuario($state);
 
+            $scope.editarUsuario = editarUsuario($scope);
+
+            $scope.removerUsuario = removerUsuario(listagemUsuarioService);
+
             inicializarListagem(listagemUsuarioService);
 
-            inicializarListeners($scope);
+            inicializarListeners($scope, listagemUsuarioService);
         });
 })();

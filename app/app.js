@@ -10,5 +10,5 @@ angular.module('myApp', [
     })
     .constant('constants', {
         apiUrl: 'https://stafapi.herokuapp.com/users',
-        token: 'thisShouldBeASecret'
+        token: 'thisShallBeSecret'
     });
