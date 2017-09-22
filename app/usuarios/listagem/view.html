@@ -1,24 +1,9 @@
-<div class="row">
+<div class="container-fluid">
     <div class="col-md-8 col-md-offset-2">
-        <div class="alert alert-success" role="alert" ng-show="showAlert === 'success'">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="esconderMensagem()"><span aria-hidden="true">&times;</span></button>
-            {{alertMessage}}
-        </div>
-        <div class="alert alert-info" role="alert" ng-show="showAlert === 'info'">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="esconderMensagem()"><span aria-hidden="true">&times;</span></button>
-            {{alertMessage}}
-        </div>
-        <div class="alert alert-warning" role="alert" ng-show="showAlert === 'warning'">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="esconderMensagem()"><span aria-hidden="true">&times;</span></button>
-            {{alertMessage}}
-        </div>
-        <div class="alert alert-danger" role="alert" ng-show="showAlert === 'danger'">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="esconderMensagem()"><span aria-hidden="true">&times;</span></button>
-            {{alertMessage}}
-        </div>
+        <notification type="typeAlert" message="alertMessage"></notification>
 
         <h1>Usuários</h1>
-        <button class="btn btn-primary">Novo</button>
+        <button class="btn btn-primary" ng-click="inserirUsuario()">Novo</button>
         <div style="margin-top: 20px;">
             <table class="table table-hover" style="margin-top: 20px;" ng-show="usuarios && usuarios.length > 0">
                 <tr>
@@ -32,7 +17,9 @@
                     <td>{{usuario.nome}}</td>
                     <td>{{usuario.email}}</td>
                     <td>
-                        <a><span class="glyphicon glyphicon-eye-open" aria-hidden="true" title="Visualizar"></span></a>
+                        <a ng-click="visualizarUsuario(usuario.id)">
+                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true" title="Visualizar"></span>
+                        </a>
                         &nbsp;
                         <a ng-disabled="true"><span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Editar"></span></a>
                         &nbsp;
@@ -40,7 +27,8 @@
                     </td>
                 </tr>
             </table>
-            <div ng-show="!usuarios || usuarios.length == 0">Carregando usuários...</div>
+            <div ng-show="usuarios && usuarios.length == 0">Nenhum usuário cadastrado ainda.</div>
+            <div ng-show="!usuarios">Carregando usuários...</div>
         </div>
     </div>
 </div>

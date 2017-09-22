@@ -2,11 +2,13 @@
 
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
-  'ngRoute',
-  'myApp.usuarios.listagem'
-]).
-config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
-  $locationProvider.hashPrefix('!');
+    'ui.router',
+    'myApp.usuarios.listagem',
+    'myApp.usuarios.edicao'])
+    .config(function ($stateProvider) {
 
-  $routeProvider.otherwise({redirectTo: '/usuarios'});
-}]);
+    })
+    .constant('constants', {
+        apiUrl: 'https://stafapi.herokuapp.com/users',
+        token: 'thisShouldBeASecret'
+    });

@@ -1,14 +1,12 @@
 'use strict';
 
-angular.module('myApp.usuarios.listagem')
-    .service('listagemUsuarioService', ['$rootScope', '$http', function ($rootScope, $http) {
-        var that = this;
-        var apiUrl = 'https://stafapi.herokuapp.com/users';
+(function () {
 
-        that.buscarTodosUsuarios = function () {
-            $http.get(apiUrl, {
+    function buscarTodosUsuarios($rootScope, $http, constants) {
+        return function () {
+            $http.get(constants.apiUrl, {
                 headers: {
-                    'token': 'someSecretsShouldNotBeRevealed'
+                    token: constants.token
                 }
             }).then(function (users) {
                 $rootScope.$broadcast('USUARIOS_CARREGADOS', users);
@@ -16,4 +14,14 @@ angular.module('myApp.usuarios.listagem')
                 $rootScope.$broadcast('ERRO_CARREGAR_USUARIOS', err);
             });
         };
-    }]);
+    }
+
+    angular.module('myApp.usuarios.listagem')
+        .service('listagemUsuarioService', function ($rootScope, $http, constants) {
+
+            var that = this;
+
+            that.buscarTodosUsuarios = buscarTodosUsuarios($rootScope, $http, constants);
+        });
+
+})();

@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
     <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
-<body>
+<body ng-app="myApp">
 <!--[if lt IE 7]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
     your browser</a> to improve your experience.</p>
@@ -43,25 +43,31 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#!/usuarios">Usuários <span class="sr-only">(current)</span></a></li>
+                <li class="active"><a href="">Usuários <span class="sr-only">(current)</span></a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
 
-<div ng-view></div>
+<ui-view></ui-view>
 
 <!-- In production use:
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
 -->
 <script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="app.js"></script>
+<!--Diretivas-->
+<script src="components/directives/notification/notification.js"></script>
 <!--Listagem de usuários-->
 <script src="usuarios/listagem/main.js"></script>
 <script src="usuarios/listagem/controller.js"></script>
 <script src="usuarios/listagem/service.js"></script>
+<!--Edição de usuários-->
+<script src="usuarios/edicao/main.js"></script>
+<script src="usuarios/edicao/controller.js"></script>
+<script src="usuarios/edicao/service.js"></script>
 </body>
 </html>

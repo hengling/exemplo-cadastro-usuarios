@@ -1,23 +1,44 @@
 'use strict';
 
-function inicializarScope($scope, listagemUsuarioService) {
-    $scope.usuarios = [];
-    listagemUsuarioService.buscarTodosUsuarios();
-}
+(function () {
 
-function inicializarListeners($scope) {
-    $scope.$on('USUARIOS_CARREGADOS', function (e, usuarios) {
-        $scope.usuarios = usuarios.data;
-    });
+    function inicializarListagem(listagemUsuarioService) {
+        listagemUsuarioService.buscarTodosUsuarios();
+    }
 
-    $scope.$on('ERRO_CARREGAR_USUARIOS', function (e, err) {
-        $scope.showAlert = 'danger';
-        $scope.alertMessage = err.data.message;
-    });
-}
+    function inicializarListeners($scope) {
+        $scope.$on('USUARIOS_CARREGADOS', function (e, usuarios) {
+            $scope.usuarios = usuarios.data;
+        });
 
-angular.module('myApp.usuarios.listagem')
-    .controller('listagemUsuarioCtrl', ['$scope', 'listagemUsuarioService', function ($scope, listagemUsuarioService) {
-        inicializarScope($scope, listagemUsuarioService);
-        inicializarListeners($scope);
-    }]);
+        $scope.$on('ERRO_CARREGAR_USUARIOS', function (e, err) {
+            $scope.usuarios = undefined;
+            $scope.typeAlert = 'danger';
+            $scope.alertMessage = err.data.message;
+        });
+    }
+
+    function inserirUsuario($state) {
+        return function () {
+            $state.go('novoUsuario');
+        };
+    }
+
+    function visualizarUsuario($state) {
+        return function (id) {
+            $state.go('visualizarUsuario', {id: id});
+        };
+    }
+
+    angular.module('myApp.usuarios.listagem')
+        .controller('listagemUsuarioCtrl', function ($scope, $state, listagemUsuarioService) {
+
+            $scope.inserirUsuario = inserirUsuario($state);
+
+            $scope.visualizarUsuario = visualizarUsuario($state);
+
+            inicializarListagem(listagemUsuarioService);
+
+            inicializarListeners($scope);
+        });
+})();
